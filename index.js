@@ -5,6 +5,7 @@ const cors = require('cors')
 const connectDB = require('./config/db')
 const bodyParser = require('body-parser')
 const routes=require('./routes/root')
+const passport =require('passport')
 
 const port=3000;
 
@@ -15,6 +16,8 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(passport.initialize())
+require('./config/passport')(passport)
 
 
 
