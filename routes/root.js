@@ -14,4 +14,4 @@ router.post('/authentificate',actions.authenticate)
 
 router.get('/getinfo',actions.getinfo)
 
-module.exports=router;
+module.exports=router;  
