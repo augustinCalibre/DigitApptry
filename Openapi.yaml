@@ -4,3 +4,7 @@ ROUTE
 /getinfo:
 /authentificate:
 /addschool:
+
+Local host
+http://localhost:3000/
+https://digitschool.herokuapp.com/
