@@ -2,18 +2,47 @@ const mongoose = require('mongoose');
 const Schema =mongoose.Schema;
 const bcrypt = require('bcrypt');
 const userSchema=new Schema({
-        nom:({
+        name:({
             type:String,
-            require:true
+            required:true
+        }),
+        prenom:({
+            type:String,
+            required:true
+        }),
+        email:({
+            type:String,
+            required:true,
+        }),
+        
+        tel:({
+            type:Number,
+            required:true,
+        }),
+        
+        photo:({
+            type:String,
+            required:true,
+        }),
+        ville:({
+            type:String,
+            required:true,
         }),
 
-        
+        typ:({
+            type:Number,
+            required:true,
+        }),
+
         password:({
             type:String,
-            require:true,
+            required:true,
 
-        })
-})
+        }),
+        ettablissement: ({ 
+            type: Schema.Types.ObjectId,
+             ref: 'School' })
+})      
 
 userSchema.pre('save', function (next) {
     var user = this;
