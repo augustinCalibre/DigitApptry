@@ -14,4 +14,6 @@ router.post('/authentificate',actions.authenticate)
 
 router.get('/getinfo',actions.getinfo)
 
+router.post('/addschool',actions.addschool)
+
 module.exports=router;  
