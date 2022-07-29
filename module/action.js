@@ -76,7 +76,7 @@ const functions = {
                             //  etablisesment:schooldata.toJSON()
                             
                             let _n=user.toObject()
-                            _n['ettablissement']=schooldata;
+                            _n['ecole']=schooldata;
                             res.json({success: true, token: token,user:_n})
                         }
                         else {
