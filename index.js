@@ -22,7 +22,7 @@ require('./config/passport')(passport)
 
 
 
-app.use(routes);
+app.use('/v1',routes);
 
 
 

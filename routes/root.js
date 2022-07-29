@@ -10,7 +10,7 @@ router.get('/',(req,res,)=>{
 
 router.post('/adduser',actions.addNew);
 
-router.post('/authentificate',actions.authenticate)
+router.post('/auth',actions.authenticate)
 
 router.get('/getinfo',actions.getinfo)
 

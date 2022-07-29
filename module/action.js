@@ -2,6 +2,8 @@ const User = require('../models/user')
 const School= require('../models/school')
 const jwt = require('jwt-simple')
 const config = require('../config/dbconfig')
+const school = require('../models/school')
+const user = require('../models/user')
 
 const functions = {
     addschool:function (req, res) {
@@ -65,10 +67,17 @@ const functions = {
                 }
 
                 else {
-                    user.comparePassword(req.body.password, function (err, isMatch) {
+                    user.comparePassword(req.body.password,async function (err, isMatch) {
                         if (isMatch && !err) {
                             var token = jwt.encode(user, config.secret)
-                            res.json({success: true, token: token,user:user})
+                           const schooldata= await school.findOne({_id:{$eq:user['ettablissement']}}).exec()
+                            // let _nUser={
+                            //     ...user.toObject(),
+                            //  etablisesment:schooldata.toJSON()
+                            
+                            let _n=user.toObject()
+                            _n['ettablissement']=schooldata.toJSON()
+                            res.json({success: true, token: token,user:_n})
                         }
                         else {
                             return res.status(403).send({success: false, msg: 'Mots de passe incorrect'})
@@ -79,11 +88,14 @@ const functions = {
         )
     },
 
-    getinfo: function (req, res) {
+    getinfo:  async function (req, res) {
         if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
             var token = req.headers.authorization.split(' ')[1]
             var decodedtoken = jwt.decode(token, config.secret)
-            return res.json({success: true, msg: 'Hello ' + decodedtoken.name})
+            const schooldata= await school.findOne({_id:{$eq:decodedtoken['ettablissement']}}).exec()
+            
+            decodedtoken['ettablissement']=schooldata.toJSON()
+            return res.json({success: true, msg:decodedtoken})
         }
         else {
             return res.json({success: false, msg: 'No Headers'})
