@@ -44,7 +44,7 @@ const functions = {
                 ville:req.body.ville,
                 typ:req.body.typ,
                 password: req.body.password,
-                ettablissement:req.body.ettablissement,
+                ecole:req.body.ecole,
             });
             newUser.save(function (err, newUser) {
                 if (err) {
@@ -76,7 +76,7 @@ const functions = {
                             //  etablisesment:schooldata.toJSON()
                             
                             let _n=user.toObject()
-                            _n['ettablissement']=schooldata.toJSON()
+                            _n['ettablissement']=schooldata;
                             res.json({success: true, token: token,user:_n})
                         }
                         else {
@@ -93,9 +93,8 @@ const functions = {
             var token = req.headers.authorization.split(' ')[1]
             var decodedtoken = jwt.decode(token, config.secret)
             const schooldata= await school.findOne({_id:{$eq:decodedtoken['ettablissement']}}).exec()
-            
-            decodedtoken['ettablissement']=schooldata.toJSON()
-            return res.json({success: true, msg:decodedtoken})
+            decodedtoken['ecole']=schooldata.toJSON()
+            return res.json({admindata:decodedtoken})
         }
         else {
             return res.json({success: false, msg: 'No Headers'})
