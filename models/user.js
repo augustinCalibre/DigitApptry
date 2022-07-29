@@ -42,7 +42,8 @@ const userSchema=new Schema({
         ettablissement: ({ 
             type: Schema.Types.ObjectId,
              ref: 'School' })
-})      
+})  
+
 
 userSchema.pre('save', function (next) {
     var user = this;
@@ -60,7 +61,7 @@ userSchema.pre('save', function (next) {
             })
         })
     }
-    else {
+    else {oke
         return next()
     }
 })
