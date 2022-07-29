@@ -39,7 +39,8 @@ const userSchema=new Schema({
             required:true,
 
         }),
-        ettablissement: ({ 
+        
+        ecole: ({ 
             type: Schema.Types.ObjectId,
              ref: 'School' })
 })  
