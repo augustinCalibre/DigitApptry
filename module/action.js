@@ -70,7 +70,7 @@ const functions = {
                     user.comparePassword(req.body.password,async function (err, isMatch) {
                         if (isMatch && !err) {
                             var token = jwt.encode(user, config.secret)
-                           const schooldata= await school.findOne({_id:{$eq:user['ettablissement']}}).exec()
+                           const schooldata= await school.findOne({_id:{$eq:user['ecole']}}).exec()
                             // let _nUser={
                             //     ...user.toObject(),
                             //  etablisesment:schooldata.toJSON()
@@ -92,8 +92,12 @@ const functions = {
         if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
             var token = req.headers.authorization.split(' ')[1]
             var decodedtoken = jwt.decode(token, config.secret)
-            const schooldata= await school.findOne({_id:{$eq:decodedtoken['ettablissement']}}).exec()
+
+            const schooldata= await school.findOne({_id:{$eq:decodedtoken['ecole']}}).exec();
+            console.log(decodedtoken)
             decodedtoken['ecole']=schooldata.toJSON()
+
+            console.log(schooldata)
             return res.json({admindata:decodedtoken})
         }
         else {
