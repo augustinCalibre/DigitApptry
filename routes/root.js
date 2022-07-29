@@ -4,7 +4,7 @@ const router = express.Router();
 const actions =require('../module/action')
 
 router.get('/',(req,res,)=>{
-    res.send("hello")
+    res.send("Votre école numérique")
 })
 
 
