@@ -30,7 +30,7 @@ const adminSchema=new Schema({
         }),
 
         typ:({
-            type:Number,
+            type:Shema.Types.ObjectId,
             required:true,
         }),
 
