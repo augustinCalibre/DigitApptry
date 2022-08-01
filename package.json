@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev":"nodemon index.js",
+    "dev": "nodemon index.js",
     "start": "node index.js"
   },
   "engines": {
@@ -13,16 +13,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
+    "busboy-body-parser": "^0.3.2",
     "connect-mongo": "^4.6.0",
     "cors": "^2.8.5",
+    "csv-parse": "^5.3.0",
     "express": "^4.18.1",
     "jwt-simple": "^0.5.6",
     "mongoose": "^6.4.4",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.19",
     "passport": "^0.6.0",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "simple-node-logger": "^21.8.12"
   }
 }

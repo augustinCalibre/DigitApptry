@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema =mongoose.Schema;
-const bcrypt = require('bcrypt');
-const userSchema=new Schema({
+const bcrypt = require('bcryptjs');
+const adminSchema=new Schema({
         name:({
             type:String,
             required:true
@@ -30,7 +30,7 @@ const userSchema=new Schema({
         }),
 
         typ:({
-            type:Number,
+            type:Shema.Types.ObjectId,
             required:true,
         }),
 
@@ -46,7 +46,7 @@ const userSchema=new Schema({
 })  
 
 
-userSchema.pre('save', function (next) {
+adminSchema.pre('save', function (next) {
     var user = this;
     if (this.isModified('password') || this.isNew) {
         bcrypt.genSalt(10, function (err, salt) {
@@ -66,7 +66,7 @@ userSchema.pre('save', function (next) {
         return next()
     }
 })
-userSchema.methods.comparePassword = function (passw, cb) {
+adminSchema.methods.comparePassword = function (passw, cb) {
     bcrypt.compare(passw, this.password, function (err, isMatch) {
         if(err) {
             return cb(err)
@@ -74,4 +74,4 @@ userSchema.methods.comparePassword = function (passw, cb) {
         cb(null, isMatch)
     })
 }
-module.exports=mongoose.model('User',userSchema)
+module.exports=mongoose.model('User',adminSchema)

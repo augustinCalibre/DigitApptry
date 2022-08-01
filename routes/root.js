@@ -1,19 +1,10 @@
 const express = require('express');
-const { get } = require('mongoose');
 const router = express.Router();
-const actions =require('../module/action')
-
-router.get('/',(req,res,)=>{
-    res.send("Votre école numérique")
-})
+const adminRoute=require('./admin/admin.route') 
+const permissionRoute=require('./permission/permission.route') 
 
 
-router.post('/adduser',actions.addNew);
-
-router.post('/auth',actions.authenticate)
-
-router.get('/getinfo',actions.getinfo)
-
-router.post('/addschool',actions.addschool)
+router.use('/admin',adminRoute)
+router.use(permissionRoute)
 
 module.exports=router;  
