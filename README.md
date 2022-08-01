@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Repository server
 
 >Contains:
@@ -9,3 +10,6 @@ All backend configurations of the Digital School.
 
 >it's important to precise: 
 This project is a end project for master level but this project will be the result of a long ambition of the authors.
+=======
+# DigitApptry
+>>>>>>> caa8dc1 (Create README.md)
