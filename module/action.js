@@ -94,10 +94,10 @@ const functions = {
             var decodedtoken = jwt.decode(token, config.secret)
 
             const schooldata= await school.findOne({_id:{$eq:decodedtoken['ecole']}}).exec();
-            console.log(decodedtoken)
+            // console.log(decodedtoken)
             decodedtoken['ecole']=schooldata.toJSON()
 
-            console.log(schooldata)
+            console.log(decodedtoken);
             return res.json({admindata:decodedtoken})
         }
         else {
