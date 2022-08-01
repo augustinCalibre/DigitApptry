@@ -77,7 +77,7 @@ const functions = {
                             
                             let _n=user.toObject()
                             _n['ecole']=schooldata;
-                            res.json({success: true, token: token,admindata:_n})
+                            res.json({success: true, token: token})
                         }
                         else {
                             return res.status(403).send({success: false, msg: 'Mots de passe incorrect'})
