@@ -24,12 +24,5 @@ require('./config/passport')(passport)
 
 app.use('/v1',routes);
 
-
-
-
-
-
-
-
 app.listen(process.env.PORT || port,()=> console.log(`Server running in  ${port}`))
 
