@@ -1,12 +1,16 @@
 const log = require("../../helpers/logger/logger");
 const Student = require("../../models/student");
+const csv=require('csvtojson')
+
 
 const functions = {
 
   addsingleStudent: async (req, res) => {
     if (!req.body.name || !req.body.password) {
       log.error(req.body);
-      res.status(400).res.json({ msg: "Invalid fields" });
+      res.status(400).res.json({
+        msg: "Invalid fields"
+      });
     } else {
       const newstudent = Student({
         name: req.body.name,
@@ -20,17 +24,44 @@ const functions = {
       });
       newstudent.save(function (err, newstudent) {
         if (err) {
-          res.status(501).json({ error: "Internal error retry later" });
+          res.status(501).json({
+            error: "Internal error retry later"
+          });
         } else {
-            res.status(200).json({ data: newstudent });
+          res.status(200).json({
+            data: newstudent
+          });
         }
       });
     }
   },
-
-  addStudents: async (req, res) => {
+  
+  addStudents:async  (req, res) => {
+    
     try {
-      /// Get csv file and extract student from it
+     const jsondata=await csv({
+      delimiter:';'
+     })
+       .fromFile(req.file.path);
+       console.log(jsondata)
+       
+       Student.insertMany(jsondata, function(err, docs) {
+        if(err){
+          log.error('Insert Many internal Erreur')
+          res.status(501).json({err:err})
+        }else{
+          res.status(201).json({data:docs})
+        }
+       });
+
+      
+      
+
+       
+        
+       
+        
+
     } catch (error) {
       log.error(error);
       res.status(501).json("Internal error");
@@ -42,11 +73,19 @@ const functions = {
       let _classroomId = req.params.classroomId;
       if (!_classroomId) {
         log.info("classroom id is not valid", _classroomId);
-        res.status(400).json({ error: "Bad request" });
+        res.status(400).json({
+          error: "Bad request"
+        });
       }
-      let students = await Student.find({ classroomId: { $eq: _classroomId } });
+      let students = await Student.find({
+        classroomId: {
+          $eq: _classroomId
+        }
+      });
       log.info("students retrieved", students);
-      res.json({ data: students });
+      res.json({
+        data: students
+      });
     } catch (error) {
       log.error(error);
       res.status(501).json("Internal error");
@@ -58,11 +97,19 @@ const functions = {
       let studentId = req.params.studentId;
       if (!studentId) {
         log.info("student id is not valid", studentId);
-        res.status(400).json({ error: "Bad request" });
+        res.status(400).json({
+          error: "Bad request"
+        });
       }
-      let student = await Student.findOne({ _id: { $eq: studentId } });
+      let student = await Student.findOne({
+        _id: {
+          $eq: studentId
+        }
+      });
       log.info("student retrieved", student);
-      res.json({ data: student });
+      res.json({
+        data: student
+      });
     } catch (error) {
       log.error(error);
       res.status(501).json("Internal error");
@@ -74,22 +121,27 @@ const functions = {
       let studentInfo = req.body;
       if (!studentId || !studentInfo) {
         log.info("student must be supply");
-        res.status(400).json({ error: "Bad request" });
+        res.status(400).json({
+          error: "Bad request"
+        });
       }
-      let student = await Student.updateOne(
-        { _id: { $eq: studentId } },
-        {
-          name: studentInfo.name,
-          prenom: studentInfo.prenom,
-          matricule: studentInfo.matricule,
-          password: studentInfo.password,
-          tel: studentInfo.tel ?? undefined,
-          photo: studentInfo.photo ?? undefined,
-          ville: studentInfo.ville ?? undefined,
+      let student = await Student.updateOne({
+        _id: {
+          $eq: studentId
         }
-      );
+      }, {
+        name: studentInfo.name,
+        prenom: studentInfo.prenom,
+        matricule: studentInfo.matricule,
+        password: studentInfo.password,
+        tel: studentInfo.tel ?? undefined,
+        photo: studentInfo.photo ?? undefined,
+        ville: studentInfo.ville ?? undefined,
+      });
       log.info("student updated", student);
-      res.json({ data: student });
+      res.json({
+        data: student
+      });
     } catch (error) {
       log.error(error);
       res.status(501).json("Internal error");
