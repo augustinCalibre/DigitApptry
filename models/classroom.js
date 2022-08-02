@@ -7,8 +7,8 @@ const Classroom=new Schema({
         required:true,
     }),
     ecole:({
-        type: Schema.Types.ObjectId,
-        ref:'School'
+        type:Schema.Types.ObjectId,
+        ref: 'School'
     })
 })
 module.exports=mongoose.model('Classroom',Classroom)

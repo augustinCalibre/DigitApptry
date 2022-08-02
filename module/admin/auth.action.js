@@ -27,7 +27,7 @@ const functions = {
                     res.json({success: false, msg: `Failed to save${err}`})
                 }
                 else {
-                    res.json({success: true, msg: 'Successfully saved'})
+                    res.status(200).json({success: true, msg: 'Successfully saved'})
                 }
             })
         }
@@ -45,10 +45,8 @@ const functions = {
                     user.comparePassword(req.body.password,async function (err, isMatch) {
                         if (isMatch && !err) {
                             var token = jwt.encode(user, config.secret)
-                           const schooldata= await school.findOne({_id:{$eq:user['ecole']}}).exec()
-                            let _n=user.toObject()
-                            _n['ecole']=schooldata;
-                            res.json({success: true, token: token,admindata:_n})
+                           
+                            res.json({success: true, token: token})
                         }
                         else {
                             return res.status(403).send({success: false, msg: 'Mots de passe incorrect'})
