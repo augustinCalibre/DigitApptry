@@ -15,10 +15,12 @@ const functions = {
             });
             newSchool.save(function (err, newSchool) {
                 if (err) {
+                    
                     res.status(501).json({error: 'Internal error retry later'})
                 }
                 else {
-                    res.json({data: newSchool})
+                    
+                    res.status(200).json({data: newSchool})
                 }
             })
         }

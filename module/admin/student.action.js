@@ -20,6 +20,7 @@ const functions = {
         photo: req.body.photo,
         ville: req.body.ville,
         password: req.body.password,
+        parentsId:req.body.parentsId,
         classroomId: req.body.class,
       });
       newstudent.save(function (err, newstudent) {
@@ -91,6 +92,29 @@ const functions = {
       res.status(501).json("Internal error");
     }
   },
+  getStudentsparents: async (req, res) => {
+    try {
+      let _parentId = req.params.parentId;
+      if (!_parentId) {
+        log.info("classroom id is not valid", _parentId);
+        res.status(400).json({
+          error: "Bad request"
+        });
+      }
+      let students = await Student.find({
+        parentId: {
+          $eq: _parentId
+        }
+      });
+      log.info("students retrieved", students);
+      res.json({
+        data: students
+      });
+    } catch (error) {
+      log.error(error);
+      res.status(501).json("Internal error");
+    }
+  },
 
   getStudent: async (req, res) => {
     try {
@@ -137,6 +161,8 @@ const functions = {
         tel: studentInfo.tel ?? undefined,
         photo: studentInfo.photo ?? undefined,
         ville: studentInfo.ville ?? undefined,
+        classroomId:studentInfo.classroomId,
+        parentId:studentInfo.parentId,
       });
       log.info("student updated", student);
       res.json({
@@ -147,6 +173,31 @@ const functions = {
       res.status(501).json("Internal error");
     }
   },
+
+
+  deletestudent: async (req, res) => {
+    try {
+      let studentId = req.params.studentId;
+      if (!studentId) {
+        log.info("parents must be supply");
+        res.status(400).json({
+          error: "Bad request"
+        });
+      }
+      let student = await Student.deleteOne({
+        _id:studentId})
+
+      log.info("parents deleted",student);
+      res.json({
+        data: 'Suprimer avec succès'
+      });
+    } catch (error) {
+      log.error(error);
+      res.status(501).json("Internal error");
+    }
+  },
 };
+
+
 
 module.exports = functions;

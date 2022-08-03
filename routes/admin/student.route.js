@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
+      cb(null, file.originalname+ '-' + uniqueSuffix)
     }
   })
 
@@ -25,9 +25,14 @@ router.patch('/student/:studentId',studentAction.updateStudent),
 // add single studdent
 router.post('/student',studentAction.addsingleStudent),
 
+//delete  single Student
+router.delete('/student/:studentId',studentAction.deletestudent),
+
 
 // Mutiple students
 router.post('/students',upload.single('csv'), studentAction.addStudents)
 router.get('/students/:classroomId',studentAction.getStudents)
+router.get('/students/parent/:parentId',studentAction.getStudentsparents)
+
 
 module.exports=router

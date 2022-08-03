@@ -27,9 +27,15 @@ const studentSchema=new Schema({
             type:String,
             required:true,
         }),
+        
         classroomId:({
             type:Schema.Types.ObjectId,
             ref:'Classroom'
+        }),
+        parentId:({
+            type:Schema.Types.ObjectId,
+            ref:'Parent'
+
         }),
 })  
 
