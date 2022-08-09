@@ -1,24 +1,28 @@
 const express = require('express');
 const log = require('../../helpers/logger/logger');
 const router = express.Router();
-const authActions =require('../../module/admin/auth.action')
+const adminActions =require('../../module/admin/admin.action')
 const classRoom=require('./classroom.route')
 const Student=require('./student.route')
-const parents=require('./professeur.route')
+const parents=require('./parents.route')
 const school=require('./school.route')
 const professeur=require('./professeur.route')
-
-
+const authenti=require('../auth_all_user/auth.admin');
 
 /// This route will be use for adding admin
-router.post('/user',authActions.addAdminNew);
+router.post('/user',adminActions.addAdminNew);
 // Get user infos
-router.get('/user',authActions.getInfo);
-// Auth user
-router.post('/auth',authActions.authenticate)
+router.get('/user',adminActions.getInfo);
+
+// Auth userk
 
 
-// classrooms
+
+
+
+
+router.use(authenti)
+
 router.use(classRoom),
 
 router.use(Student)
@@ -30,8 +34,8 @@ router.use(professeur)
 
 
 
-router.get('/ping',(req,res)=>{
-    log.info("ping passed")
+router.get('/ping', (req,res)=>{
+    log.info("ping passed fro ADMIN")
     res.json("Hello from admin")
 })
 

@@ -1,9 +1,75 @@
 const log = require("../../helpers/logger/logger");
 const Student = require("../../models/student");
+const jwt = require('jwt-simple')
+const config = require('../../config/dbconfig')
 const csv=require('csvtojson')
 
 
 const functions = {
+  updateParents: async (req, res) => {
+    try {
+      let studentId = req.params.studentId;
+      let studentInfo = req.body;
+      if (!studentId || !studentInfo) {
+        log.info("parents must be supply");
+        res.status(400).json({
+          error: "Bad request"
+        });
+      }
+      let student = await Student.updateOne({
+        _id: {
+          $eq: studentId
+        }
+      }, {
+        name: studentInfo.name,
+        prenom: studentInfo.prenom,
+        email: studentInfo.email,
+        password: studentInfo.password,
+        tel: studentInfo.tel ?? undefined,
+        photo: studentInfo.photo ?? undefined,
+        ville: studentInfo.ville ?? undefined,
+      });
+      log.info("parents updated", parents);
+      res.json({
+        data: parents
+      });
+    } catch (error) {
+      log.error(error);
+      res.status(501).json("Internal error");
+    }
+  },
+
+  authenticate: function (req, res) {
+    Student.findOne({
+        name: req.body.name
+    }, function (err, user) {
+            if (err) throw err
+            if (!user) {
+                res.status(403).send({success: false, msg: "nom d'utilisateur inconnu"})
+            }
+            else {
+                user.comparePassword(req.body.password,async function (err, isMatch) {
+                    if (isMatch && !err) {
+                        var token = jwt.encode(user, config.secret)
+                       
+                        res.json({success: true, token: token})
+                    }
+                    else {
+                      log.error('Mot de passe incorrect')
+                        return res.status(403).send({success: false, msg: 'Mots de passe incorrect'})
+                    }
+                })
+            }
+    }
+    )
+},
+
+
+
+
+
+
+
 
   addsingleStudent: async (req, res) => {
     if (!req.body.name || !req.body.password) {
@@ -179,7 +245,7 @@ const functions = {
     try {
       let studentId = req.params.studentId;
       if (!studentId) {
-        log.info("parents must be supply");
+        log.info("student must be supply");
         res.status(400).json({
           error: "Bad request"
         });
@@ -187,7 +253,7 @@ const functions = {
       let student = await Student.deleteOne({
         _id:studentId})
 
-      log.info("parents deleted",student);
+      log.info("student deleted",student);
       res.json({
         data: 'Suprimer avec succès'
       });

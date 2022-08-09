@@ -1,6 +1,5 @@
 const router=require('express').Router()
-const professeursAction=require('../../module/admin/professeur.action')
-const multer=require('multer')
+const professeursAction=require('../../module/professeur/professeur.action')
 
 
 

@@ -1,5 +1,5 @@
 const router=require('express').Router()
-const studentAction=require('../../module/admin/student.action')
+const studentAction=require('../../module/student/student.action')
 const multer=require('multer')
 
 const storage = multer.diskStorage({

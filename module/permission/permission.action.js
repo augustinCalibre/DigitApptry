@@ -4,9 +4,8 @@ const TypePermission=require('../../models/typePermission')
 const functions={
     addPermission: async function (req, res) {
         if (!req.body.role){
-            con
+            
             log.error('You need to supply a role')
-            log.trace('You need to supply a role')
             res.status(400).json({error: 'You need to supply a role'})
         }
         else {

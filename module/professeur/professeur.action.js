@@ -1,5 +1,6 @@
 const log = require("../../helpers/logger/logger");
-const professeur = require("../../models/professeur");
+const jwt = require('jwt-simple')
+const config = require('../../config/dbconfig')
 const Professeur = require("../../models/professeur");
 
 
@@ -36,14 +37,12 @@ const functions = {
       });
     }
   },
-  
-  
-  
-  getprofesseurs: async (req, res) => {
+
+getprofesseurs: async (req, res) => {
     try {
       let professeursId = req.params.professeursId;
       if (!professeursId) {
-        log.info("professeurs id is not valid", professeursId);
+        log.info("professeur id is not valid", professeursId);
         res.status(400).json({
           error: "Bad request"
         });
@@ -63,6 +62,30 @@ const functions = {
     }
   },
 
+  authenticate: function (req, res) {
+    Professeur.findOne({
+        name: req.body.name
+    }, function (err, user) {
+            if (err) throw err
+            if (!user) {
+                res.status(403).send({success: false, msg: "nom d'utilisateur inconnu"})
+            }
+            else {
+                user.comparePassword(req.body.password,async function (err, isMatch) {
+                    if (isMatch && !err) {
+                        var token = jwt.encode(user, config.secret)
+                       
+                        res.json({success: true, token: token})
+                    }
+                    else {
+                      log.error('Mot de passe incorrect')
+                        return res.status(403).send({success: false, msg: 'Mots de passe incorrect'})
+                    }
+                })
+            }
+    }
+    )
+},
 
   // Modifier un professeurs
   updateprofesseur: async (req, res) => {

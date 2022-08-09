@@ -31,4 +31,9 @@ const Newschool=new Schema({
     }),
 
 })
+
+
+
+
+
 module.exports=mongoose.model('School',Newschool)

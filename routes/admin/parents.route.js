@@ -1,5 +1,5 @@
 const router=require('express').Router()
-const parentsAction=require('../../module/admin/parents.action')
+const parentsAction=require('../../module/parents/parents.action')
 const multer=require('multer')
 
 const storage = multer.diskStorage({
@@ -30,5 +30,10 @@ router.delete('/parent/:parentsId',parentsAction.deleteparents),
 
 // Mutiple parentss
 router.post('/parents',upload.single('csv'), parentsAction.addParents)
+
+
+// Authentification
+// router.post('/parent/auth', parentsAction.authenticate)
+
 
 module.exports=router

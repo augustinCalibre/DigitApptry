@@ -1,9 +1,36 @@
 const log = require("../../helpers/logger/logger");
 const Parent = require("../../models/parent");
+const jwt = require('jwt-simple')
+const config = require('../../config/dbconfig')
 const csv=require('csvtojson')
 
 
 const functions = {
+
+  authenticate: function (req, res) {
+    Parent.findOne({
+        name: req.body.name
+    }, function (err, user) {
+            if (err) throw err
+            if (!user) {
+                res.status(403).send({success: false, msg: "nom d'utilisateur inconnu"})
+            }
+            else {
+                user.comparePassword(req.body.password,async function (err, isMatch) {
+                    if (isMatch && !err) {
+                        var token = jwt.encode(user, config.secret)
+                       
+                        res.json({success: true, token: token})
+                    }
+                    else {
+                      log.error('Mot de passe incorrect')
+                        return res.status(403).send({success: false, msg: 'Mots de passe incorrect'})
+                    }
+                })
+            }
+    }
+    )
+},
 
   addsingleParents: async (req, res) => {
     if (!req.body.name || !req.body.password) {
@@ -20,12 +47,14 @@ const functions = {
         photo: req.body.photo,
         ville: req.body.ville,
         password: req.body.password,
-        
+
        
       });
       newparents.save(function (err, newparents) {
         if (err) {
+          log.error(err)
           res.status(501).json({
+            
             error: "Internal error retry later"
           });
         } else {
@@ -44,8 +73,6 @@ const functions = {
       delimiter:';'
      })
        .fromFile(req.file.path);
-       console.log(jsondata)
-       
        Parent.insertMany(jsondata, function(err, docs) {
         if(err){
           log.error('Insert Many internal Erreur')
