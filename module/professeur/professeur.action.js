@@ -121,6 +121,22 @@ getprofesseurs: async (req, res) => {
   },
 
 
+  getInfo:  async function (req, res) {
+    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+        var token = req.headers.authorization.split(' ')[1]
+        var decodedtoken = jwt.decode(token, config.secret)
+
+        // const professeurdata= await Professeur.findOne({_id:{$eq:decodedtoken['ecole']}}).exec();
+        // // console.log(decodedtoken)
+        // decodedtoken['ecole']=schooldata.toJSON()
+
+        // console.log(decodedtoken);
+        return res.json({professeursdata:decodedtoken})
+    }
+    else {
+        return res.json({success: false, msg: 'No Headers'})
+    }
+},
 
 
 

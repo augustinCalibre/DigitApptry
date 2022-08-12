@@ -11,6 +11,9 @@ router.get('/ping', (req,res)=>{
     log.info("ping passed")
     res.json("Hello from professeur")
 }),
+
+router.get('/user',professeurAction.getInfo);
+
 router.use(authentificate)
 
 module.exports=router

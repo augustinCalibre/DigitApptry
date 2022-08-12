@@ -13,5 +13,7 @@ router.get('/ping', (req,res)=>{
     log.info("ping passed")
     res.json("Hello from student")
 })
+router.get('/user',studentAction.getInfo);
+
 
 module.exports=router
