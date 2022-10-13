@@ -35,7 +35,6 @@ router.use(professeur)
 
 
 router.get('/ping', (req,res)=>{
-    log.info("ping passed fro ADMIN")
     res.json("Hello from admin")
 })
 

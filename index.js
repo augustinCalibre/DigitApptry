@@ -6,7 +6,6 @@ const connectDB = require('./config/db')
 const bodyParser = require('body-parser')
 const routes=require('./routes/root')
 const passport =require('passport')
-const log = require('./helpers/logger/logger')
 
 const port=3000;
 
