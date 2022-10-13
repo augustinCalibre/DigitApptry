@@ -37,14 +37,12 @@ const functions={
         if(!schoolId){
             log.error('Invalid School Id', schoolId)
             res.status(400).json({error: 'Invalid school Id'})
-            return
         }
         // find classroom
         let lifeSchool=await LifeSchool.find({ecole:{$eq:schoolId}})
         if(lifeSchool){
             log.info('classroom is ', lifeSchool)
             res.status(200).json({data:lifeSchool})
-            return
         }
         log.info('classroom with Id', schoolId, 'doesnt exist')
         res.status(204).json()
