@@ -7,12 +7,14 @@ const storage = multer.diskStorage({
       cb(null, './public/uploads')
     },
     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.originalname+ '-' + uniqueSuffix)
+      
+      cb(null, file.originalname)
     }
   })
 
 const upload=multer({storage:storage})
+const type=upload.single('image');
+
 
 
 
@@ -23,7 +25,7 @@ router.get('/student/:studentId',studentAction.getStudent)
 router.patch('/student/:studentId',studentAction.updateStudent),
 
 // add single studdent
-router.post('/student',studentAction.addsingleStudent),
+router.post('/student',type,studentAction.addsingleStudent),
 
 //delete  single Student
 router.delete('/student/:studentId',studentAction.deletestudent),

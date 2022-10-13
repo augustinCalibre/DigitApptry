@@ -13,6 +13,7 @@ const functions={
             titre: req.body.titre,
             Description: req.body.description,
             image:req.file.path,
+            ecole:req.body.ecole,
           });
           newLifeSchool.save(function (err, newLifeSchool) {
             if (err) {
@@ -29,18 +30,23 @@ const functions={
       },
 
 
-      getAllLifeSchool:async(req,res)=>{
+     
+    getAllife:async(req,res)=>{
         // Get classroom id
-
-        
-        // find classroom
-        let lifeschool=await LifeSchool.find()
-        if(lifeschool){
-            log.info('Life School is ', lifeschool)
-            res.status(200).json({data:lifeschool})
-            return lifeschool;
-            
+        let schoolId=req.params.schoolId
+        if(!schoolId){
+            log.error('Invalid School Id', schoolId)
+            res.status(400).json({error: 'Invalid school Id'})
+            return
         }
+        // find classroom
+        let lifeSchool=await LifeSchool.find({ecole:{$eq:schoolId}})
+        if(lifeSchool){
+            log.info('classroom is ', lifeSchool)
+            res.status(200).json({data:lifeSchool})
+            return
+        }
+        log.info('classroom with Id', schoolId, 'doesnt exist')
         res.status(204).json()
     },
 

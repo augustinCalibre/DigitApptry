@@ -23,7 +23,8 @@ const type=upload.single('image');
 
 router.post('/',type, lifeSchoolAction.addlifeSchool)
 router.patch('/:lifeschoolid',type, lifeSchoolAction.updatelifeSchool)
-router.get('/', lifeSchoolAction.getAllLifeSchool)
+router.get('/:schoolId', lifeSchoolAction.getAllife)
+
 
 
 router.get('/ping', (req,res)=>{

@@ -13,6 +13,11 @@ const LifeSchool=new Schema({
     Description:({
         type:String,
         required:true,
+    }),
+    ecole:({
+        type:Schema.Types.ObjectId,
+        ref: 'School'
     })
-})
+    
+},{ timestamps: true })
 module.exports=mongoose.model('LifeSchool',LifeSchool)

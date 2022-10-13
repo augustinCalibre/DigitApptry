@@ -89,7 +89,7 @@ const functions = {
   addsingleStudent: async (req, res) => {
     if (!req.body.name || !req.body.password) {
       log.error(req.body);
-      res.status(400).json({
+      res.status(400).res.json({
         msg: "Invalid fields"
       });
     } else {
@@ -98,7 +98,7 @@ const functions = {
         prenom: req.body.prenom,
         matricule: req.body.matricule,
         tel: req.body.tel,
-        photo: req.body.photo,
+        photo: req.file.path,
         ville: req.body.ville,
         password: req.body.password,
         parentsId:req.body.parentsId,
