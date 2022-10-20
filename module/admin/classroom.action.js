@@ -15,11 +15,10 @@ const functions={
         if(classroom){
             log.info('classroom is ', classroom)
             res.status(200).json({data:classroom})
-            return;
             
-        }
+        }else{
         log.info('classroom with Id', classroomId, 'doesnt exist')
-        res.status(204).json()
+        res.status(204).json()}
     },
 
 
