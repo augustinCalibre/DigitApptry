@@ -36,32 +36,13 @@ const functions={
         if(classroom){
             log.info('classroom is ', classroom)
             res.status(200).json({data:classroom})
-            return;
             
-        }
+            
+        }else{
         log.info('classroom with Id', schoolId, 'doesnt exist')
-        res.status(204).json()
+        res.status(204).json()}
     },
-    getAllClassroom:async(req,res)=>{
-        // Get classroom id
-        let schoolId=req.params.schoolId
-        if(!schoolId){
-            log.error('Invalid School Id', schoolId)
-            res.status(400).json({error: 'Invalid school Id'})
-            
-        }
-        // find classroom
-        let classroom=await Classroom.find({ecole:{$eq:schoolId}})
-        if(classroom){
-            log.info('classroom is ', classroom)
-            res.status(200).json({data:classroom})
-            
-        }
-        log.info('classroom with Id', schoolId, 'doesnt exist')
-        res.status(204).json()
-    },
-
-
+    
 
 
     addClassroom:async(req,res)=>{
