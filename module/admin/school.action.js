@@ -36,7 +36,7 @@ const functions = {
                 const newSchool =await School.findOne({_id:{$eq:schoolId}});
                 if(newSchool){
                     res.json({data: newSchool})
-                    return
+                    
                 }
                 res.status(400).json({error:'no school found'})
             } catch (error) {

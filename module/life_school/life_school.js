@@ -43,8 +43,9 @@ const functions={
         if(lifeSchool){
             log.info('classroom is ', lifeSchool)
             res.status(200).json({data:lifeSchool})
+            return;
         }
-        log.info('classroom with Id', schoolId, 'doesnt exist')
+        log.info('School with Id', schoolId, 'doesnt exist')
         res.status(204).json()
     },
 
