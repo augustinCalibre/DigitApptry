@@ -15,6 +15,7 @@ const functions={
         if(classroom){
             log.info('classroom is ', classroom)
             res.status(200).json({data:classroom})
+            return;
             
         }
         log.info('classroom with Id', classroomId, 'doesnt exist')

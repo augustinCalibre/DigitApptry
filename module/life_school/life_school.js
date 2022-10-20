@@ -72,6 +72,7 @@ const functions={
             titre: lifeschoolInfo.titre,
             description: lifeschoolInfo.description,
             image: lifeschoolInfo.image,
+            ecole: lifeschoolInfo.ecole
             
           });
           log.info("lifeSchool updated", lifeSchool);
