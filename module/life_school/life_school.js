@@ -18,7 +18,9 @@ const functions={
           newLifeSchool.save(function (err, newLifeSchool) {
             if (err) {
               res.status(501).json({
-                error: "Internal error retry later"
+                
+                error: err
+                
               });
             } else {
               res.status(200).json({
