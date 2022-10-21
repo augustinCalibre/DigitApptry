@@ -12,7 +12,7 @@ const LifeSchool=new Schema({
     }),
     Description:({
         type:String,
-        required:true,
+        required:false,
     }),
     ecole:({
         type:Schema.Types.ObjectId,
