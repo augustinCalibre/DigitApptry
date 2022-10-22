@@ -101,6 +101,7 @@ const functions = {
         photo: req.file.path,
         ville: req.body.ville,
         password: req.body.password,
+        ecole:req.body.ecole,
         parentsId:req.body.parentsId,
         classroomId: req.body.class,
       });
@@ -239,6 +240,7 @@ const functions = {
         prenom: studentInfo.prenom,
         matricule: studentInfo.matricule,
         password: studentInfo.password,
+        
         tel: studentInfo.tel ?? undefined,
         photo: studentInfo.photo ?? undefined,
         ville: studentInfo.ville ?? undefined,
